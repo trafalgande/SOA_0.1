@@ -11,23 +11,23 @@ import javax.validation.constraints.Positive;
 
 @Data
 public class CreateMusicBandRequest {
-    @NotNull(message = "Name can not be null")
-    @NotBlank(message = "Name can not be blank")
+    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull(message = "Coordinates can not be null")
+    @NotNull
     private Coordinates coordinates;
 
-    @Positive(message = "Number of participants must exceed 0")
-    @NotNull(message = "Number of participants can not be null")
+    @Positive
+    @NotNull
     private long numberOfParticipants;
 
-    @NotNull(message = "Description can not be null")
+    @NotNull
     private String description;
 
-    @NotNull(message = "Music Genre can not be null")
+    @NotNull
     private MusicGenre genre;
 
-    @NotNull(message = "Label can not be null")
+    @NotNull
     private Label label;
 }

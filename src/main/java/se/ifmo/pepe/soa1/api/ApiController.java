@@ -5,19 +5,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.ifmo.pepe.soa1.domain.Role;
 import se.ifmo.pepe.soa1.dto.request.CreateMusicBandRequest;
 import se.ifmo.pepe.soa1.dto.request.UpdateMusicBandRequest;
 import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 import se.ifmo.pepe.soa1.service.MusicBandService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@RolesAllowed(Role.USER)
 public class ApiController {
-
     private final MusicBandService musicBandService;
 
     @GetMapping("/music-bands")

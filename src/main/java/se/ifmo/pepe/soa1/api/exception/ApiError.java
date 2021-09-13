@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,10 +15,12 @@ import java.util.Set;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiError {
-    private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime timestamp;
+    private HttpStatus status;
     private String message;
+    private String path;
     private String details;
     private Map<String, Set<String>> errorMap;
+    private List<String> errors;
 }
