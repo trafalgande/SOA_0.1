@@ -11,16 +11,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import se.ifmo.pepe.soa1.api.exception.custom.UsernameAlreadyExistsException;
 import se.ifmo.pepe.soa1.api.exception.resolver.ExceptionBuilder;
 
-import javax.validation.ValidationException;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RestControllerAdvice
@@ -41,14 +39,7 @@ public class RestExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
                                                                   HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request) {
-//        final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-//        Map<String, Set<String>> errors = fieldErrors.stream().collect(
-//                Collectors.groupingBy(FieldError::getField,
-//                        Collectors.mapping(FieldError::getDefaultMessage, Collectors.toSet())
-//                )
-//        );
-
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
         for (FieldError error : exception.getBindingResult().getFieldErrors()) {
             errors.add(error.getField() + ": " + error.getDefaultMessage());
         }
