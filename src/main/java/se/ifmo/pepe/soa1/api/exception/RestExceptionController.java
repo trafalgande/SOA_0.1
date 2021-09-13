@@ -5,8 +5,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,9 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import se.ifmo.pepe.soa1.api.exception.custom.UsernameAlreadyExistsException;
 import se.ifmo.pepe.soa1.api.exception.resolver.ExceptionBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 
 @RestControllerAdvice
@@ -39,13 +37,14 @@ public class RestExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
                                                                   HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request) {
-        List<String> errors = new ArrayList<>();
-        for (FieldError error : exception.getBindingResult().getFieldErrors()) {
-            errors.add(error.getField() + ": " + error.getDefaultMessage());
-        }
-        for (ObjectError error : exception.getBindingResult().getGlobalErrors()) {
-            errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
-        }
+        List<String> errors = exception.getBindingResult().getFieldErrors()
+                                       .stream()
+                                       .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                                       .collect(Collectors.toList());
+        exception.getBindingResult().getGlobalErrors()
+                 .stream()
+                 .map(error -> error.getObjectName() + ": " + error.getDefaultMessage())
+                 .forEach(errors::add);
 
         return exceptionBuilder.build(exception, errors, request, HttpStatus.BAD_REQUEST);
     }
