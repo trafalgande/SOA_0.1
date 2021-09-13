@@ -6,7 +6,6 @@ import se.ifmo.pepe.soa1.domain.Label;
 import se.ifmo.pepe.soa1.domain.MusicGenre;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 

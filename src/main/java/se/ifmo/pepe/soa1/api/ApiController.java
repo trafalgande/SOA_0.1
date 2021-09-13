@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.ifmo.pepe.soa1.dto.request.CreateMusicBandRequest;
 import se.ifmo.pepe.soa1.dto.request.UpdateMusicBandRequest;
@@ -12,8 +11,6 @@ import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 import se.ifmo.pepe.soa1.service.MusicBandService;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -55,21 +52,21 @@ public class ApiController {
                 .ok(musicBandService.readMusicBand(id));
     }
 
-    @PostMapping("/music-band/create")
+    @PostMapping("/music-band")
     public ResponseEntity<MusicBandView> createMusicBand(@RequestBody @Valid CreateMusicBandRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(musicBandService.createMusicBand(request));
     }
 
-    @PatchMapping("/music-band/{id}/update")
+    @PatchMapping("/music-band/{id}")
     public ResponseEntity<MusicBandView> updateMusicBand(@PathVariable("id") Long id,
                                                          @RequestBody @Valid UpdateMusicBandRequest request) {
         return ResponseEntity
                 .ok(musicBandService.updateMusicBand(request, id));
     }
 
-    @DeleteMapping("/music-band/{id}/delete")
+    @DeleteMapping("/music-band/{id}")
     public ResponseEntity<Object> deleteMusicBand(@PathVariable("id") Long id) {
         musicBandService.deleteMusicBand(id);
         return ResponseEntity
