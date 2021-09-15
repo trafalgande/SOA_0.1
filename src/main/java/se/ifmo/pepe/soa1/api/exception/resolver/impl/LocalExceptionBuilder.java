@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -23,7 +22,7 @@ public class LocalExceptionBuilder implements ExceptionBuilder {
     @Override
     public ResponseEntity<Object> build(RuntimeException exception, WebRequest request, HttpStatus status) {
         return new ResponseEntity<>(ApiError.builder()
-                                            .status(status)
+                                            .status(status.value())
                                             .timestamp(LocalDateTime.now())
                                             .message(exception.getLocalizedMessage())
                                             .details(Arrays.toString(exception.getStackTrace())) // debug-only
@@ -34,7 +33,7 @@ public class LocalExceptionBuilder implements ExceptionBuilder {
     @Override
     public ResponseEntity<Object> build(MethodArgumentNotValidException exception, Map<String, Set<String>> errors, WebRequest request, HttpStatus status) {
         return new ResponseEntity<>(ApiError.builder()
-                                            .status(status)
+                                            .status(status.value())
                                             .timestamp(LocalDateTime.now())
                                             .message(exception.getMessage())
                                             .details(Arrays.toString(exception.getStackTrace())) // debug-only
@@ -46,7 +45,7 @@ public class LocalExceptionBuilder implements ExceptionBuilder {
     @Override
     public ResponseEntity<Object> build(MethodArgumentNotValidException exception, List<String> errors, WebRequest request, HttpStatus status) {
         return new ResponseEntity<>(ApiError.builder()
-                                            .status(status)
+                                            .status(status.value())
                                             .timestamp(LocalDateTime.now())
                                             .message(errors.toString())
                                             .details(Arrays.toString(exception.getStackTrace())) // debug-only

@@ -1,6 +1,7 @@
 package se.ifmo.pepe.soa1.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class AuthController {
     public ResponseEntity<AuthUserView> login(@Valid @RequestBody AuthUserRequest request) {
         AuthUserView authUserView = userService.authenticate(request);
         return ResponseEntity.ok()
-                              .header(authUserView.getToken())
+                              .header(HttpHeaders.AUTHORIZATION, authUserView.getToken())
                               .body(authUserView);
     }
 
