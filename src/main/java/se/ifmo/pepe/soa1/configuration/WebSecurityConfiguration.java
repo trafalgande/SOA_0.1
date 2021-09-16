@@ -52,6 +52,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
                 .antMatchers("/**").permitAll()
                 // Our private endpoints
+
+
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated();
 
