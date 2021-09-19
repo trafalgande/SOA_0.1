@@ -1,57 +1,57 @@
-package se.ifmo.pepe.soa1.api;
+package se.ifmo.pepe.soa1.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import se.ifmo.pepe.soa1.domain.Role;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import se.ifmo.pepe.soa1.dto.request.CreateMusicBandRequest;
 import se.ifmo.pepe.soa1.dto.request.UpdateMusicBandRequest;
 import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 import se.ifmo.pepe.soa1.service.MusicBandService;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@RolesAllowed(Role.USER)
 public class ApiController {
     private final MusicBandService musicBandService;
 
     @GetMapping("/music-bands")
-    public ResponseEntity<List<MusicBandView>> getAll(Pageable pageable) {
-        return ResponseEntity
-                .ok(musicBandService.readAllMusicBands(pageable));
+    public List<MusicBandView> getAll(Pageable pageable) {
+        return musicBandService.readAllMusicBands(pageable);
     }
 
     @GetMapping(value = "/music-bands", params = {"by-description-length"})
-    public ResponseEntity<List<MusicBandView>> getMusicBandsByDescriptionLength(@RequestParam(name = "by-description-length") Integer length,
+    public List<MusicBandView> getMusicBandsByDescriptionLength(@RequestParam(name = "by-description-length") Integer length,
                                                                                 Pageable pageable) {
-        return ResponseEntity
-                .ok(musicBandService.getMusicBandsByDescriptionLessThen(length, pageable));
+        return musicBandService.getMusicBandsByDescriptionLessThen(length, pageable);
     }
 
     @GetMapping(value = "/music-bands", params = {"by-label-value"})
-    public ResponseEntity<List<MusicBandView>> getMusicBandsByLabelValue(@RequestParam(name = "by-label-value") Double value,
+    public List<MusicBandView> getMusicBandsByLabelValue(@RequestParam(name = "by-label-value") Double value,
                                                                          Pageable pageable) {
-        return ResponseEntity
-                .ok(musicBandService.getMusicBandsBySalesLessThen(value, pageable));
+        return musicBandService.getMusicBandsBySalesLessThen(value, pageable);
     }
 
     @GetMapping(value = "/music-bands/count", params = {"by-number-of-participants"})
-    public ResponseEntity<Long> countMusicBandsByAmountOfParticipants(@RequestParam(name = "by-number-of-participants") Long amount) {
-        return ResponseEntity
-                .ok(musicBandService.getMusicBandsAmountByNumberOfParticipants(amount));
+    public Long countMusicBandsByAmountOfParticipants(@RequestParam(name = "by-number-of-participants") Long amount) {
+        return musicBandService.getMusicBandsAmountByNumberOfParticipants(amount);
     }
 
     @GetMapping("/music-band/{id}")
-    public ResponseEntity<MusicBandView> getMusicBandById(@PathVariable("id") Long id) {
-        return ResponseEntity
-                .ok(musicBandService.readMusicBand(id));
+    public MusicBandView getMusicBandById(@PathVariable("id") Long id) {
+        return musicBandService.readMusicBand(id);
     }
 
     @PostMapping("/music-band")
@@ -62,10 +62,9 @@ public class ApiController {
     }
 
     @PatchMapping("/music-band/{id}")
-    public ResponseEntity<MusicBandView> updateMusicBand(@PathVariable("id") Long id,
+    public MusicBandView updateMusicBand(@PathVariable("id") Long id,
                                                          @RequestBody @Valid UpdateMusicBandRequest request) {
-        return ResponseEntity
-                .ok(musicBandService.updateMusicBand(request, id));
+        return musicBandService.updateMusicBand(request, id);
     }
 
     @DeleteMapping("/music-band/{id}")

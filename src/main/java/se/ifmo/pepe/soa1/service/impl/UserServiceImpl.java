@@ -8,19 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import se.ifmo.pepe.soa1.api.exception.custom.UsernameAlreadyExistsException;
 import se.ifmo.pepe.soa1.domain.User;
 import se.ifmo.pepe.soa1.dto.mapper.UserMapper;
 import se.ifmo.pepe.soa1.dto.request.AuthUserRequest;
 import se.ifmo.pepe.soa1.dto.request.CreateUserRequest;
 import se.ifmo.pepe.soa1.dto.response.AuthUserView;
 import se.ifmo.pepe.soa1.dto.response.UserView;
+import se.ifmo.pepe.soa1.exception.UsernameAlreadyExistsException;
 import se.ifmo.pepe.soa1.repository.UserRepository;
 import se.ifmo.pepe.soa1.security.JwtTokenUtil;
 import se.ifmo.pepe.soa1.service.UserService;
 
-import javax.validation.ValidationException;
 import java.util.HashSet;
 import java.util.UUID;
 

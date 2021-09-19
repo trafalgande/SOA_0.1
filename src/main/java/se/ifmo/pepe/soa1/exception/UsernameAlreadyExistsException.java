@@ -1,4 +1,4 @@
-package se.ifmo.pepe.soa1.api.exception.custom;
+package se.ifmo.pepe.soa1.exception;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
     public UsernameAlreadyExistsException(String message) {

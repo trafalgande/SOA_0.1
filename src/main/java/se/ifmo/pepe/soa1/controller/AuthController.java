@@ -1,4 +1,4 @@
-package se.ifmo.pepe.soa1.api;
+package se.ifmo.pepe.soa1.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @CrossOrigin
 public class AuthController {
-
     private final UserService userService;
 
     @PostMapping("/login")
@@ -33,7 +32,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserView> signup(@Valid @RequestBody CreateUserRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
                 .body(userService.register(request));
     }
 }
