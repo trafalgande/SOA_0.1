@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
     private UserRepository userRepository;
-
+    private final JwtTokenUtil jwtTokenUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -35,14 +35,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // Get jwt token and validate
         final String token = header.split(" ")[1].trim();
-        if (!JwtTokenUtil.validate(token)) {
+        if (!jwtTokenUtil.validate(token)) {
             chain.doFilter(request, response);
             return;
         }
 
         // Get user identity and set it on the spring security context
         UserDetails userDetails = userRepository
-                .findByUsername(JwtTokenUtil.getUsername(token))
+                .findByUsername(jwtTokenUtil.getUsername(token))
                 .orElse(null);
 
         UsernamePasswordAuthenticationToken

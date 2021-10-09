@@ -6,23 +6,22 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.ifmo.pepe.soa1.configuration.SecurityConfigurationMap;
 import se.ifmo.pepe.soa1.domain.User;
 
 import java.util.Date;
 
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 @Slf4j
 @Component
 public class JwtTokenUtil {
-    private static final SecurityConfigurationMap configurationMap = new SecurityConfigurationMap();
 
-
-    public static String generateAccessToken(User user) {
+    private final SecurityConfigurationMap configurationMap;
+    public String generateAccessToken(User user) {
+        log.info(configurationMap.getSecret());
         return Jwts.builder()
                 .setSubject(String.format("%s,%s", user.getUuid(), user.getUsername()))
                 .setIssuedAt(new Date())
@@ -31,7 +30,7 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public static String getUserId(String token) {
+    public String getUserId(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(configurationMap.getSecret())
                 .parseClaimsJws(token)
@@ -40,7 +39,7 @@ public class JwtTokenUtil {
         return claims.getSubject().split(",")[0];
     }
 
-    public static String getUsername(String token) {
+    public String getUsername(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(configurationMap.getSecret())
                 .parseClaimsJws(token)
@@ -49,7 +48,7 @@ public class JwtTokenUtil {
         return claims.getSubject().split(",")[1];
     }
 
-    public static Date getExpirationDate(String token) {
+    public Date getExpirationDate(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(configurationMap.getSecret())
                 .parseClaimsJws(token)
@@ -58,7 +57,7 @@ public class JwtTokenUtil {
         return claims.getExpiration();
     }
 
-    public static boolean validate(String token) {
+    public boolean validate(String token) {
         try {
             Jwts.parser().setSigningKey(configurationMap.getSecret()).parseClaimsJws(token);
             return true;

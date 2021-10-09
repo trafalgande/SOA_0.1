@@ -1,13 +1,20 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Home} from "./containers/homeContainer/Home";
+import {Route, Switch, withRouter} from "react-router-dom";
+import {RequestsContentContainer} from "./containers/contentContainer/requestsContainers/RequestsContentContainer";
+import {TopBar} from "./containers/topBarContainer/TopBar";
+import {TableContentContainer} from "./containers/contentContainer/tablesContainers/TableContentContainer";
 
-export const App = () => {
+export const App = (props) => {
+    const { history } = props
     return (
-        <div className="bg">
-          <Home/>
+        <div className={`custom-bg`}>
+            <TopBar/>
+            <Switch>
+                <Route history={history} path={'/requests'} component={RequestsContentContainer}/>
+                <Route history={history} path={'/tables'} component={TableContentContainer}/>
+            </Switch>
         </div>
     );
 }
 
-export default App;
+export default withRouter(App);

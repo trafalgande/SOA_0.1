@@ -1,22 +1,7 @@
-.blurred-card {
-    position: absolute;
-    width: 368px;
-    height: 184px;
-    left: 60px;
-    top: 69px;
-
-    background: rgba(239, 241, 251, 0.5);
-    border: 1.6px solid rgba(255, 255, 255, 0.5);
-    box-sizing: border-box;
-    box-shadow: -12.8px -12.8px 64px -3.2px rgba(255, 255, 255, 0.65), 12.8px 12.8px 51.2px -3.2px #DADEEF;
-    backdrop-filter: blur(45px);
-    /* Note: backdrop-filter has minimal browser support */
-    border-radius: 51.2px;
-}
-
 .top-bar-container {
     width: 100%;
     padding: 15px;
+    margin-bottom: 40px;
     font-family: 'Lato', sans-serif;
 }
 
@@ -46,51 +31,6 @@
 }
 
 
-.btn-fancy-light {
-    align-items: center;
-    appearance: none;
-    background-color: #d9edf5;
-    border-radius: 4px;
-    border-width: 0;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 3px 3px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #acacff 0 -3px 0 inset;
-    box-sizing: border-box;
-    color: #36395A;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: "JetBrains Mono", monospace;
-    height: 48px;
-    justify-content: center;
-    line-height: 1;
-    list-style: none;
-    overflow: hidden;
-    padding-left: 16px;
-    padding-right: 16px;
-    position: relative;
-    text-align: left;
-    text-decoration: none;
-    transition: box-shadow .15s, transform .15s;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    will-change: box-shadow, transform;
-    font-size: 18px;
-}
-
-.btn-fancy-light:focus {
-    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-}
-
-.btn-fancy-light:hover {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-    transform: translateY(-2px);
-}
-
-.btn-fancy-light:active {
-    box-shadow: #D6D6E7 0 3px 7px inset;
-    transform: translateY(2px);
-}
-
 .btn-fancy-simple {
     align-items: center;
     background-color: #FFFFFF;
@@ -119,8 +59,8 @@
     width: auto;
 }
 
-.btn-fancy-simple:disabled {
-    color: rgba(139, 139, 139, 0.65);
+.btn-fancy-simple:hover:disabled {
+    color: rgba(152, 152, 152, 0.65);
 }
 
 .btn-fancy-simple:hover:enabled,
@@ -139,7 +79,7 @@
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
     color: rgba(0, 0, 0, 0.65);
-    transform: translateY(0);
+    /*transform: translateY(0);*/
 }
 
 .vertical-divider {

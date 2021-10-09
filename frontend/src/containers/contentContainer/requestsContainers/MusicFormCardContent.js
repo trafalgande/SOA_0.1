@@ -2,7 +2,7 @@ import {Card, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {useState} from "react";
 import {isEmpty} from "lodash";
 
-export const ExpandedCreateMusicFormCardContent = () => {
+export const MusicFormCardContent = (props) => {
     const [groupName, setGroupName] = useState('')
     const [x, setX] = useState(NaN)
     const [y, setY] = useState(NaN)
@@ -11,13 +11,37 @@ export const ExpandedCreateMusicFormCardContent = () => {
     const [genre, setGenre] = useState('')
     const [description, setDescription] = useState('')
 
-    const validateForm = () => {
-        return !(isEmpty(groupName)
+    const [id, setId] = useState(NaN)
+
+    const {formMethod} = props
+
+
+    const determineFetchMethod = () => {
+        switch (formMethod) {
+            case 'POST':
+                break;
+            case 'PATCH':
+                break;
+            case 'DEL':
+                break;
+        }
+    }
+
+
+    const validateForm = (formMethod) => {
+        let expr = !(
+            isEmpty(groupName)
             || isNaN(x)
             || isNaN(y)
             || isNaN(numberOfParticipants)
             || isNaN(sales)
-            || isEmpty(description))
+            || isEmpty(description)
+        )
+        if (formMethod === 'PATCH' || formMethod === 'DEL')
+            expr = expr && !isNaN(id)
+
+        return expr
+
     }
 
     const handleSubmit = async (e) => {
@@ -30,6 +54,7 @@ export const ExpandedCreateMusicFormCardContent = () => {
             console.log(sales)
             console.log(genre)
             console.log(description)
+            console.log(id)
         }
     }
 
@@ -44,7 +69,8 @@ export const ExpandedCreateMusicFormCardContent = () => {
                                 type={`text`}
                                 placeholder={`Group name`}
                                 value={groupName}
-                                onChange={e => setGroupName(e.target.value)}/>
+                                onChange={e => setGroupName(e.target.value)}
+                                required/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Enter coordinates:</Form.Label>
@@ -54,14 +80,16 @@ export const ExpandedCreateMusicFormCardContent = () => {
                                         type={`number`}
                                         placeholder={`X`}
                                         value={x}
-                                        onChange={e => setX(Number(e.target.value))}/>
+                                        onChange={e => setX(Number(e.target.value))}
+                                        required/>
                                 </Col>
                                 <Col className={`float-right`}>
                                     <Form.Control
                                         type={`number`}
                                         placeholder={`Y`}
                                         value={y}
-                                        onChange={e => setY(Number(e.target.value))}/>
+                                        onChange={e => setY(Number(e.target.value))}
+                                        required/>
                                 </Col>
                             </Row>
                         </Form.Group>
@@ -74,6 +102,7 @@ export const ExpandedCreateMusicFormCardContent = () => {
                                 placeholder={`Number of participants`}
                                 value={numberOfParticipants}
                                 onChange={e => setNumberOfParticipants(Number(e.target.value))}
+                                required
                             />
                         </Form.Group>
                         <Form.Label>Enter label' sales:</Form.Label>
@@ -83,6 +112,7 @@ export const ExpandedCreateMusicFormCardContent = () => {
                                 placeholder={`Sales`}
                                 value={sales}
                                 onChange={e => setSales(Number(e.target.value))}
+                                required
                             />
                         </InputGroup>
                     </Col>
@@ -92,6 +122,7 @@ export const ExpandedCreateMusicFormCardContent = () => {
                         <Form.Group>
                             <Form.Label>Select genre</Form.Label>
                             <Form.Control
+                                required
                                 as={'select'}
                                 value={genre}
                                 onChange={e => setGenre(e.target.value)}>
@@ -102,6 +133,23 @@ export const ExpandedCreateMusicFormCardContent = () => {
                             </Form.Control>
                         </Form.Group>
                     </Col>
+                    {
+                        (formMethod === 'PATCH' || formMethod === 'DEL') &&
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Enter ID</Form.Label>
+                                <Form.Control
+                                    type={`number`}
+                                    placeholder={`ID`}
+                                    value={id}
+                                    onChange={e => setId(Number(e.target.value))}
+                                    required/>
+
+                            </Form.Group>
+                        </Col>
+
+                    }
+
                 </Row>
                 <Row>
                     <Col>
@@ -111,6 +159,7 @@ export const ExpandedCreateMusicFormCardContent = () => {
                                 as={'textarea'}
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
+                                required
                             />
                         </Form.Group>
                     </Col>

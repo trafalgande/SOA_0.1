@@ -1,0 +1,4 @@
+{
+  "ALL_MUSIC_BANDS": "/api/music-bands",
+  "MUSIC_BAND": "/api/music-band/{}"
+}
