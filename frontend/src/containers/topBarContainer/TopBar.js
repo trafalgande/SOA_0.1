@@ -6,7 +6,7 @@ export const TopBar = () => {
         <Container className="top-bar-container">
             <Row>
                 <Col className="top-bar-brand-name">
-                    BRAND-NAME
+                    <h3>MUSIC BANDS</h3>
                 </Col>
 
                 <Row className="top-bar-account-section">
@@ -16,7 +16,7 @@ export const TopBar = () => {
                     </button>
                     <div className={`vertical-divider`}/>
                     <button
-                        className="btn-fancy-light">
+                        className="btn-fancy-simple">
                         SIGN UP
                     </button>
                 </Row>
