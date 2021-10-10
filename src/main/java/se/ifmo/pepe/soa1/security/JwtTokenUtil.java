@@ -21,7 +21,6 @@ public class JwtTokenUtil {
 
     private final SecurityConfigurationMap configurationMap;
     public String generateAccessToken(User user) {
-        log.info(configurationMap.getSecret());
         return Jwts.builder()
                 .setSubject(String.format("%s,%s", user.getUuid(), user.getUsername()))
                 .setIssuedAt(new Date())
