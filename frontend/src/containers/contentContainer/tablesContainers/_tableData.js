@@ -1,16 +1,22 @@
 import {getAllMusicBands} from "../../../_api/client";
 import {TableItemEditButton} from "./TableItemEditButton";
+import {useState} from "react";
+import {AiOutlineDelete} from "react-icons/all";
 
 const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2ODU5ODU0NC1hYWRjLTQ2ZjgtODBjYS1lOTI0MWM3NzZjOGMsbG1hbyIsImlhdCI6MTYzMzgwNzkzOSwiZXhwIjoxNjM0NDEyNzM5fQ.PBy06PlyHx13yvSqCOLOniNVU-wfjwtDwvJ0s1OMFbgegFfPLdugPuwMRHdRhi97ig6bfvKA59bmEAvU0YKBNw'
 
-const fetchData = () => {
-    return getAllMusicBands(token, null)
+export const fetchTableData = (options) => {
+    return getAllMusicBands(token, options)
         .then(data => data.json())
 }
+
+
 const assembleContentRows = () => {
     let rows = []
-    fetchData().then(content => {
-        content.map((element, i) => (
+    let response = {}
+    fetchTableData().then(r => {
+        response = r
+        r.content.map((element, i) => (
                 rows[i] = (
                     {
                         id: element.id,
@@ -21,17 +27,72 @@ const assembleContentRows = () => {
                         x: element.coordinates.x.toFixed(2),
                         y: element.coordinates.y.toFixed(2),
                         description: element.description,
-                        edit: <TableItemEditButton/>
+                        actions: <TableItemEditButton/>
                     }
                 )
             )
         )
     })
-    return rows
+    return [rows, response]
 }
 
-export const data = {
-    columns: [
+export const [rows, response] = assembleContentRows()
+export const data = React.useMemo(
+    () => [
+        {
+            Header: '#',
+            accessor: 'id',
+        },
+        {
+            Header: 'Band Name',
+            accessor: 'name',
+        },
+        {
+            Header: 'Genre',
+            accessor: 'genre',
+        },
+        {
+            Header: 'Label [Sales]',
+            accessor: 'sales',
+        },
+        {
+            Header: '# of participants',
+            accessor: 'numberOfParticipants',
+        },
+        {
+            Header: 'X',
+            accessor: 'x',
+        },
+        {
+            Header: 'Y',
+            accessor: 'y',
+        },
+        {
+            Header: 'Description',
+            accessor: 'description',
+        },
+        {
+            Header: 'Actions',
+            accessor: 'actions',
+            Cell: (props) => {
+                const rowId = props.row.id
+                return (
+                    <div>
+                        <span onClick={() => deleteRow(rowId)}>
+                            <AiOutlineDelete/>
+                        </span>
+                    </div>
+                )
+            }
+        }
+    ], []
+)
+
+const deleteRow = (id) => {
+    console.log(id)
+}
+
+/*    columns: [
         {
             label: '#',
             field: 'id',
@@ -90,6 +151,5 @@ export const data = {
             width: 50
         }
     ],
-    rows: assembleContentRows()
-}
+*/
 

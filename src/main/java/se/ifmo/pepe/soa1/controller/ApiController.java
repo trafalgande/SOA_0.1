@@ -1,6 +1,8 @@
 package se.ifmo.pepe.soa1.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +32,20 @@ public class ApiController {
     private final MusicBandService musicBandService;
 
     @GetMapping("/music-bands")
-    public List<MusicBandView> getAll(Pageable pageable) {
-        return musicBandService.readAllMusicBands(pageable);
+    public Page<MusicBandView> getAll(Pageable pageable) {
+        return new PageImpl<>(musicBandService.readAllMusicBands(pageable));
     }
 
     @GetMapping(value = "/music-bands", params = {"by-description-length"})
-    public List<MusicBandView> getMusicBandsByDescriptionLength(@RequestParam(name = "by-description-length") Integer length,
+    public Page<MusicBandView> getMusicBandsByDescriptionLength(@RequestParam(name = "by-description-length") Integer length,
                                                                                 Pageable pageable) {
-        return musicBandService.getMusicBandsByDescriptionLessThen(length, pageable);
+        return new PageImpl<>(musicBandService.getMusicBandsByDescriptionLessThen(length, pageable));
     }
 
     @GetMapping(value = "/music-bands", params = {"by-label-value"})
-    public List<MusicBandView> getMusicBandsByLabelValue(@RequestParam(name = "by-label-value") Double value,
+    public Page<MusicBandView> getMusicBandsByLabelValue(@RequestParam(name = "by-label-value") Double value,
                                                                          Pageable pageable) {
-        return musicBandService.getMusicBandsBySalesLessThen(value, pageable);
+        return new PageImpl<>(musicBandService.getMusicBandsBySalesLessThen(value, pageable));
     }
 
     @GetMapping(value = "/music-bands/count", params = {"by-number-of-participants"})
