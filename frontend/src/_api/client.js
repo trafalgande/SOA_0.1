@@ -1,10 +1,8 @@
+import {dispatch} from "./pathDispatcher";
 
-const paths = require("./paths.json")
 
-const get = (path, token) => {
-    fetch(path, intercept('GET', token))
-        .then(response => response.json())
-        .then(console.log)
+const get = async (path, token) => {
+    return await fetch(path, intercept('GET', token))
 }
 
 const post = (path, token, payload) => {
@@ -24,7 +22,6 @@ const patch = (path, token, payload) => {
         .then(response => response.json())
         .then(console.log)
 }
-
 
 const intercept = (method, token, payload) => {
     let headers = new Headers()
@@ -55,8 +52,8 @@ const intercept = (method, token, payload) => {
 }
 
 export const getAllMusicBands = (token, options) => {
-    const {page, size, sort} = options
-    get(paths['ALL_MUSIC_BANDS'], token)
+    const url = dispatch('MUSIC_BANDS', options)
+    return get(url, token)
 }
 
 

@@ -1,3 +1,4 @@
+import '../styles.css';
 import {ExpandableContainer} from "../../../expandableContainer/ExpandableContainer";
 import {UpdateMusicBandFormContent} from "./UpdateMusicBandFormContent";
 
