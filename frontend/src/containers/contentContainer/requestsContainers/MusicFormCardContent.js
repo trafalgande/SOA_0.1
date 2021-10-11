@@ -1,6 +1,10 @@
 import {Card, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {useState} from "react";
 import {isEmpty} from "lodash";
+import {postNewMusicBand, updateMusicBand} from "../../../_api/client";
+import {TOKEN} from "../../../_api/_options";
+import {notify} from "../../notificationContainer/notifications";
+import {processErr} from "../../../_api/errorProcessing";
 
 export const MusicFormCardContent = (props) => {
     const [groupName, setGroupName] = useState('')
@@ -15,19 +19,6 @@ export const MusicFormCardContent = (props) => {
 
     const {formMethod} = props
 
-
-    const determineFetchMethod = () => {
-        switch (formMethod) {
-            case 'POST':
-                break;
-            case 'PATCH':
-                break;
-            case 'DEL':
-                break;
-        }
-    }
-
-
     const validateForm = (formMethod) => {
         let expr = !(
             isEmpty(groupName)
@@ -37,24 +28,60 @@ export const MusicFormCardContent = (props) => {
             || isNaN(sales)
             || isEmpty(description)
         )
-        if (formMethod === 'PATCH' || formMethod === 'DEL')
+        if (formMethod === 'PUT' || formMethod === 'DEL')
             expr = expr && !isNaN(id)
-
         return expr
-
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (validateForm()) {
-            console.log(groupName)
-            console.log(x)
-            console.log(y)
-            console.log(numberOfParticipants)
-            console.log(sales)
-            console.log(genre)
-            console.log(description)
-            console.log(id)
+            switch (formMethod) {
+                case 'POST': {
+                    postNewMusicBand(TOKEN, null, {
+                        name: groupName,
+                        x: x,
+                        y: y,
+                        numOfParticipants: numberOfParticipants,
+                        description: description,
+                        genre: genre,
+                        sales: sales
+                    })
+                        .then(data => data.json())
+                        .then(response => {
+                                if (response.status) {
+                                    response.errors.map((err, _) => {
+                                        notify(processErr(err), 'error')
+                                    })
+                                } else notify(`Music Band [${response.id}] has been successfully created`, 'yay')
+                            }
+                        )
+                    break;
+                }
+                case 'PUT': {
+                    updateMusicBand(TOKEN, null, {
+                        id: id,
+                        name: groupName,
+                        x: x,
+                        y: y,
+                        numOfParticipants: numberOfParticipants,
+                        description: description,
+                        genre: genre,
+                        sales: sales
+                    })
+                        .then(data => {
+                            if (data.status === 200) notify(`Music Band [${id}] has been successfully updated`, 'yay')
+                            else if (data.status === 400) {
+                                data.json()
+                                    .then(response =>  response.errors.map((err, _) => notify(processErr(err), 'error')))
+
+                            } else data.json()
+                                .then(response => notify(response.message, 'error'))
+                        })
+
+                    break;
+                }
+            }
         }
     }
 
@@ -126,15 +153,16 @@ export const MusicFormCardContent = (props) => {
                                 as={'select'}
                                 value={genre}
                                 onChange={e => setGenre(e.target.value)}>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
+                                <option value={null}>Choose option</option>
+                                <option value={'PSYCHEDELIC_ROCK'}>PSYCHEDELIC ROCK</option>
+                                <option value={'RAP'}>RAP</option>
+                                <option value={'PSYCHEDELIC_CLOUD_RAP'}>PSYCHEDELIC CLOUD RAP</option>
+                                <option value={'POP'}>POP</option>
                             </Form.Control>
                         </Form.Group>
                     </Col>
                     {
-                        (formMethod === 'PATCH' || formMethod === 'DEL') &&
+                        (formMethod === 'PUT' || formMethod === 'DEL') &&
                         <Col>
                             <Form.Group>
                                 <Form.Label>Enter ID</Form.Label>
@@ -144,7 +172,6 @@ export const MusicFormCardContent = (props) => {
                                     value={id}
                                     onChange={e => setId(Number(e.target.value))}
                                     required/>
-
                             </Form.Group>
                         </Col>
 

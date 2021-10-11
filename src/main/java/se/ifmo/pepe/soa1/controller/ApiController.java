@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,6 @@ import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 import se.ifmo.pepe.soa1.service.MusicBandService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -45,7 +44,7 @@ public class ApiController {
     @GetMapping(value = "/music-bands", params = {"by-label-value"})
     public Page<MusicBandView> getMusicBandsByLabelValue(@RequestParam(name = "by-label-value") Double value,
                                                                          Pageable pageable) {
-        return new PageImpl<>(musicBandService.getMusicBandsBySalesLessThen(value, pageable));
+        return new PageImpl<>(musicBandService.getMusicBandsBySalesGreaterThen(value, pageable));
     }
 
     @GetMapping(value = "/music-bands/count", params = {"by-number-of-participants"})
@@ -65,7 +64,7 @@ public class ApiController {
                 .body(musicBandService.createMusicBand(request));
     }
 
-    @PatchMapping("/music-band/{id}")
+    @PutMapping("/music-band/{id}")
     public MusicBandView updateMusicBand(@PathVariable("id") Long id,
                                                          @RequestBody @Valid UpdateMusicBandRequest request) {
         return musicBandService.updateMusicBand(request, id);

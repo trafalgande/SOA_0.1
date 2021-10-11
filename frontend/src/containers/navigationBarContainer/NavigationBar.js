@@ -4,7 +4,7 @@ import './styles.css'
 
 export const NavigationBar = () => {
     return (
-        <Container className={`p-3 text-center `}>
+        <Container className={`p-3 text-center`}>
             <Row>
                 <Col>
                     <Link to={'/requests'} className={`custom-link`} style={{color:"#252525"}}> Requests </Link>

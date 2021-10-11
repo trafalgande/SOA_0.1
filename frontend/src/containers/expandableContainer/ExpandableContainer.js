@@ -8,13 +8,14 @@ export const ExpandableContainer = (props) => {
 
     return (
         <div className={`accordion elevation-sm`}>
-            <div className={`accordion-title`} onClick={e => setOpen(!isOpen)}>
-                <span>{title}</span>
+            <div className={`accordion-title `} onClick={() => setOpen(!isOpen)}>
+                <span className={`.c-span`}>{title}</span>
                 <AiOutlineDown aria-expanded={isOpen} alt='Toggle Accordion' className='toggle'/>
             </div>
-            <div className={`accordion-content`} aria-expanded={!isOpen}>
+            <div className={`accordion-content table-wrapper-scroll-y custom-scrollbar`} aria-expanded={!isOpen}>
                 {props.children}
             </div>
+
         </div>
     )
 }

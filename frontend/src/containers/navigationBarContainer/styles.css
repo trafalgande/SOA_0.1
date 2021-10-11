@@ -34,11 +34,11 @@ main {
     white-space: nowrap;
 }
 
-span {
+.c-span {
     position: relative;
 }
 
-span:before {
+.c-span:before {
     content: "";
     position: absolute;
     left: 0;
@@ -53,6 +53,6 @@ span:before {
     background-position: 0 11px;
 }
 
-span:hover:before {
+.c-span:hover:before {
     transform: translateY(4px)
 }
