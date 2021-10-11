@@ -33,3 +33,4 @@ build/
 .vscode/
 
 src/main/resources/security.properties
+frontend/node_modules

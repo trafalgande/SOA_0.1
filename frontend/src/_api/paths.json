@@ -1,0 +1,6 @@
+{
+  "MUSIC_BANDS": "/api/music-bands",
+  "MUSIC_BANDS_COUNT": "/api/music-bands/count",
+  "MUSIC_BAND": "/api/music-band",
+  "MUSIC_BAND_BY_ID": "/api/music-band/{id}"
+}

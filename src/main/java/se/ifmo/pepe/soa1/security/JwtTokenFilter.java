@@ -20,9 +20,8 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private JwtTokenUtil jwtTokenUtil;
     private UserRepository userRepository;
-
+    private final JwtTokenUtil jwtTokenUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
