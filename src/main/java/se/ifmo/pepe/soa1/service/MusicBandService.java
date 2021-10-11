@@ -17,5 +17,5 @@ public interface MusicBandService {
 
     Long getMusicBandsAmountByNumberOfParticipants(Long amount);
     List<MusicBandView> getMusicBandsByDescriptionLessThen(Integer value, Pageable pageable);
-    List<MusicBandView> getMusicBandsBySalesLessThen(Double value, Pageable pageable);
+    List<MusicBandView> getMusicBandsBySalesGreaterThen(Double value, Pageable pageable);
 }

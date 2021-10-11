@@ -82,7 +82,7 @@ public class MusicBandServiceImpl implements MusicBandService {
 
     @Override
     @Transactional
-    public List<MusicBandView> getMusicBandsBySalesLessThen(Double value, Pageable pageable) {
+    public List<MusicBandView> getMusicBandsBySalesGreaterThen(Double value, Pageable pageable) {
         return musicBandViewMapper
                 .toMusicBandPagesView(musicBandRepository.findAllByLabelSalesGreaterThan(value, pageable));
     }

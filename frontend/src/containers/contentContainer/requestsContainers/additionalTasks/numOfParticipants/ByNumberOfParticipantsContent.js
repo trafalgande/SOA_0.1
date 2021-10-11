@@ -1,4 +1,4 @@
-import {Card, Col, Form, InputGroup, Row} from "react-bootstrap";
+import {Card, Col, Form, Row} from "react-bootstrap";
 import {useState} from "react";
 import {countMusicBandsByNumberOfParticipantsLessThen} from "../../../../../_api/client";
 import {TOKEN} from "../../../../../_api/_options";
