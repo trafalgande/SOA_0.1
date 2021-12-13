@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "music_bands")
@@ -47,4 +48,7 @@ public class MusicBand {
     @JoinColumn(name = "label", nullable = false)
     private Label label;
 
+    @ElementCollection
+    @Column(name = "singles")
+    private List<String> singles;
 }

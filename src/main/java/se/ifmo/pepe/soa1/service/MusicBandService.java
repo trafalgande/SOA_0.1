@@ -1,9 +1,9 @@
 package se.ifmo.pepe.soa1.service;
 
+import dto.music_band.request.CreateMusicBandRequest;
+import dto.music_band.request.UpdateMusicBandRequest;
+import dto.music_band.response.MusicBandView;
 import org.springframework.data.domain.Pageable;
-import se.ifmo.pepe.soa1.dto.request.CreateMusicBandRequest;
-import se.ifmo.pepe.soa1.dto.request.UpdateMusicBandRequest;
-import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 
 import java.util.List;
 
@@ -18,4 +18,7 @@ public interface MusicBandService {
     Long getMusicBandsAmountByNumberOfParticipants(Long amount);
     List<MusicBandView> getMusicBandsByDescriptionLessThen(Integer value, Pageable pageable);
     List<MusicBandView> getMusicBandsBySalesLessThen(Double value, Pageable pageable);
+
+    MusicBandView removeParticipantFromBand(Long bandId);
+    MusicBandView addSingleToBand(Long bandId, String single);
 }

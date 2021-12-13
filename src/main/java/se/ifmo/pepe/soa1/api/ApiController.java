@@ -1,14 +1,15 @@
 package se.ifmo.pepe.soa1.api;
 
+import dto.music_band.request.AddSingleRequest;
+import dto.music_band.request.CreateMusicBandRequest;
+import dto.music_band.request.UpdateMusicBandRequest;
+import dto.music_band.response.MusicBandView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.ifmo.pepe.soa1.domain.Role;
-import se.ifmo.pepe.soa1.dto.request.CreateMusicBandRequest;
-import se.ifmo.pepe.soa1.dto.request.UpdateMusicBandRequest;
-import se.ifmo.pepe.soa1.dto.response.MusicBandView;
 import se.ifmo.pepe.soa1.service.MusicBandService;
 
 import javax.annotation.security.RolesAllowed;
@@ -74,5 +75,15 @@ public class ApiController {
         return ResponseEntity
                 .ok()
                 .build();
+    }
+
+    @PostMapping("/music-bands/{id}/singles")
+    public MusicBandView addSingle(@PathVariable("id") Long id, @RequestBody String title) {
+        return musicBandService.addSingleToBand(id, title);
+    }
+
+    @DeleteMapping("/music-bands/{id}/participants")
+    public MusicBandView removeParticipant(@PathVariable("id") Long id) {
+        return musicBandService.removeParticipantFromBand(id);
     }
 }

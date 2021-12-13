@@ -3,19 +3,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>se.ifmo.pepe</groupId>
+        <artifactId>soa-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>se.ifmo.pepe</groupId>
+    
     <artifactId>soa-1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>soa-1</name>
     <description>soa-1</description>
+
     <properties>
-        <java.version>11</java.version>
-        <lombok.version>1.18.20</lombok.version>
+        <lombo.version>1.18.20</lombo.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <io.jwt.version>0.9.1</io.jwt.version>
@@ -25,6 +24,11 @@
         <yarn.version>v1.22.11</yarn.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>se.ifmo.pepe</groupId>
+            <artifactId>soa-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -181,8 +185,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
