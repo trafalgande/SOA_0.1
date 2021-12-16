@@ -15,19 +15,15 @@ import java.util.List;
 @Component
 public abstract class MusicBandViewMapper {
     public abstract MusicBandView toMusicBandView(MusicBand musicBand);
-    protected void afterToMusicBandViewMapping(@MappingTarget MusicBandView musicBandView, MusicBand musicBand) {
-        musicBandView.setCoordinates(
-                CoordinatesDto.builder()
-                              .x(musicBand.getCoordinates().getX())
-                              .y(musicBand.getCoordinates().getY())
-                              .build()
-        );
 
-        musicBandView.setLabel(
-                LabelDto.builder()
-                        .sales(musicBand.getLabel().getSales())
-                        .build()
-        );
+    protected void afterToMusicBandViewMapping(@MappingTarget MusicBandView musicBandView, MusicBand musicBand) {
+        CoordinatesDto coordinatesDto = new CoordinatesDto();
+        coordinatesDto.setX(musicBand.getCoordinates().getX());
+        coordinatesDto.setY(musicBand.getCoordinates().getY());
+        musicBandView.setCoordinates(coordinatesDto);
+
+        musicBandView.setLabel(new LabelDto(musicBand.getLabel().getSales()));
+        musicBandView.setSingles(musicBand.getSingles());
     }
 
 

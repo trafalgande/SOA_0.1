@@ -10,7 +10,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store: classpath:keystore/soa.p12
+    key-store-type: pkcs12
+    key-alias: soa
+    key-store-password: soasoa
+    key-password: soasoa
 
 

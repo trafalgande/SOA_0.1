@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@RolesAllowed(Role.USER)
+//@RolesAllowed(Role.USER)
 public class ApiController {
     private final MusicBandService musicBandService;
 

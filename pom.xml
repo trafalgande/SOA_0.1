@@ -22,6 +22,10 @@
         <frontend.maven.plugin.version>1.12.0</frontend.maven.plugin.version>
         <node.version>v14.16.0</node.version>
         <yarn.version>v1.22.11</yarn.version>
+
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -112,6 +116,33 @@
                                     <directory>frontend/build</directory>
                                 </resource>
                             </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>create-https-certificate</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generateKeyPair</goal>
+                        </goals>
+                        <configuration>
+                            <alias>soa</alias>
+                            <dname>CN=localhost, OU=${project.name}, O=Sentry Software, C=FR</dname>
+                            <keyalg>RSA</keyalg>
+                            <keypass>soasoa</keypass>
+                            <keystore>${project.build.outputDirectory}/soa.p12</keystore>
+                            <sigalg>SHA256withRSA</sigalg>
+                            <skipIfExist>true</skipIfExist>
+                            <storepass>soasoa</storepass>
+                            <storetype>PKCS12</storetype>
+                            <validity>3650</validity>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,4 +1,4 @@
-package se.ifmo.pepe.soa1.configuration;
+package se.ifmo.pepe.soa1.security.configuration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -36,31 +36,27 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable();
 
-        http = http
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, ex) -> {
-                            response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    ex.getMessage()
-                            );
-                        }
-                )
-                .and();
+//        http = http
+//                .exceptionHandling()
+//                .authenticationEntryPoint(
+//                        (request, response, ex) -> {
+//                            response.sendError(
+//                                    HttpServletResponse.SC_UNAUTHORIZED,
+//                                    ex.getMessage()
+//                            );
+//                        }
+//                )
+//                .and();
 
         http.authorizeRequests()
-                // Our public endpoints
-                .antMatchers("/**").permitAll()
-                // Our private endpoints
+//                .antMatchers("/**").permitAll()
+//                .antMatchers("/api/**").authenticated()
+                .anyRequest().permitAll();
 
-
-                .antMatchers("/api/**").authenticated()
-                .anyRequest().authenticated();
-
-        http.addFilterBefore(
-                jwtTokenFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
+//        http.addFilterBefore(
+//                jwtTokenFilter,
+//                UsernamePasswordAuthenticationFilter.class
+//        );
 
     }
 
